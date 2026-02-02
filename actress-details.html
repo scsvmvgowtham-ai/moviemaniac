@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Actress Details | MovieManiac</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- ================= NAVBAR ================= -->
+  <header class="navbar">
+    <div class="logo">🎬 MovieManiac</div>
+    <nav class="nav-bar">
+      <a href="index.html">Movies</a>
+      <a href="actors.html">Actors</a>
+      <a href="actresses.html" class="active">Actresses</a>
+      <a href="comedians.html">Comedians</a>
+      <a href="directors.html">Directors</a>
+    </nav>
+  </header>
+
+  <!-- ================= MAIN CONTENT ================= -->
+  <main class="details-page">
+    <div class="details-header">
+      <img id="actressImage" class="details-poster" alt="Actress">
+      <div class="details-info">
+        <h1 id="actressName"></h1>
+        <p id="actressIndustry" style="font-size:1.2rem;color:#d4af37;margin-bottom:2rem;"></p>
+      </div>
+    </div>
+    <section class="cast-section">
+      <h2>Movies</h2>
+      <div id="actressMovies" class="movie-grid"></div>
+    </section>
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer>
+    <p>© 2026 MovieManiac - Your Cinematic Journey Begins Here</p>
+  </footer>
+
+  <!-- ================= SCRIPTS ================= -->
+  <script src="js/data.js"></script>
+  <script src="js/actress-details.js"></script>
+</body>
+</html>

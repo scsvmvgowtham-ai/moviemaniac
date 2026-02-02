@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎬 MovieManiac | Your Ultimate Movie Database</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- ================= NAVBAR ================= -->
+  <header class="navbar">
+    <div class="logo">🎬 MovieManiac</div>
+    <nav class="nav-bar">
+      <a href="home.html">Home</a>
+      <a href="index.html" class="active">Movies</a>
+      <a href="actors.html">Actors</a>
+      <a href="actresses.html">Actresses</a>
+      <a href="comedians.html">Comedians</a>
+      <a href="directors.html">Directors</a>
+    </nav>
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Search Movies...">
+    </div>
+  </header>
+
+  <!-- ================= HERO SECTION ================= -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Your Ultimate Movie Database</h1>
+      <p>Explore movies, actors, actresses, comedians, directors & more</p>
+    </div>
+  </section>
+
+  <!-- ================= SLIDESHOW ================= -->
+  <section class="slideshow">
+    <div class="slides" id="movieSlideshow"></div>
+  </section>
+
+  <!-- ================= INDUSTRY HUB ================= -->
+  <section class="featured">
+    <h2>🎬 Explore Movie Industries</h2>
+    <div id="industryHub" class="grid"></div>
+    <button id="backToIndustries" style="display:none;">⬅ Back to Industries</button>
+    <div class="movie-grid" id="movieGrid"></div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer>
+    <p>© 2026 MovieManiac - Your Cinematic Journey Begins Here</p>
+  </footer>
+
+  <!-- ================= SCRIPTS ================= -->
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
