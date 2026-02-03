@@ -43,6 +43,8 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
 .logo {
@@ -55,11 +57,13 @@ body {
   background-clip: text;
   letter-spacing: 2px;
   text-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
+  flex-shrink: 0;
 }
 
 .nav-bar {
   display: flex;
   gap: 2.5rem;
+  flex-wrap: wrap;
 }
 
 .nav-bar a {
@@ -71,6 +75,7 @@ body {
   transition: all 0.3s ease;
   text-transform: uppercase;
   letter-spacing: 1px;
+  white-space: nowrap;
 }
 
 .nav-bar a::after {
@@ -123,7 +128,7 @@ body {
 
 /* ================= HERO SECTION ================= */
 .hero {
-  height: 60vh;
+  min-height: 60vh;
   background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)),
               url('https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=1920') center/cover;
   display: flex;
@@ -132,6 +137,7 @@ body {
   text-align: center;
   position: relative;
   overflow: hidden;
+  padding: 2rem;
 }
 
 .hero::before {
@@ -148,6 +154,7 @@ body {
   position: relative;
   z-index: 1;
   animation: fadeInUp 1s ease;
+  max-width: 90%;
 }
 
 .hero h1 {
@@ -160,6 +167,7 @@ body {
   -webkit-text-fill-color: transparent;
   background-clip: text;
   text-shadow: 0 0 50px rgba(212, 175, 55, 0.5);
+  line-height: 1.2;
 }
 
 .hero p {
@@ -396,23 +404,22 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(15, 15, 30, 0.9));
+  background: rgba(0, 0, 0, 0.6);
 }
 
 .industry-banner h1 {
+  position: relative;
+  z-index: 1;
   font-family: 'Cinzel', serif;
   font-size: 4rem;
   color: var(--primary);
-  position: relative;
-  z-index: 1;
-  text-shadow: 0 0 30px rgba(212, 175, 55, 0.8);
+  text-shadow: 0 0 50px rgba(212, 175, 55, 0.7);
 }
 
 /* ================= DETAILS PAGE ================= */
 .details-page {
-  padding: 4rem 5%;
-  max-width: 1400px;
-  margin: 0 auto;
+  padding: 2rem 5%;
+  animation: fadeIn 0.8s ease;
 }
 
 .details-header {
@@ -420,17 +427,16 @@ body {
   gap: 3rem;
   margin-bottom: 3rem;
   background: var(--card-bg);
-  padding: 3rem;
   border-radius: 20px;
-  box-shadow: 0 20px 60px var(--shadow);
+  padding: 2rem;
+  box-shadow: 0 10px 40px var(--shadow);
 }
 
 .details-poster {
-  width: 400px;
-  height: 600px;
-  object-fit: cover;
+  width: 350px;
+  height: auto;
   border-radius: 15px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
 .details-info {
@@ -444,24 +450,32 @@ body {
   margin-bottom: 1rem;
 }
 
-.details-info .meta {
+.meta {
   display: flex;
   gap: 2rem;
   margin-bottom: 2rem;
-  font-size: 1.1rem;
-  color: var(--text);
+  flex-wrap: wrap;
 }
 
-.details-info .description {
-  font-size: 1.2rem;
-  line-height: 1.8;
-  margin-bottom: 2rem;
+.meta span {
+  font-size: 1.1rem;
   color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.description {
+  font-size: 1.15rem;
+  line-height: 1.8;
+  color: var(--text);
+  margin-bottom: 2rem;
+  text-align: justify;
 }
 
 .trailer-btn {
   display: inline-block;
-  padding: 1rem 3rem;
+  padding: 1rem 2rem;
   background: var(--gold-gradient);
   color: var(--dark);
   text-decoration: none;
@@ -469,17 +483,17 @@ body {
   font-weight: 600;
   font-size: 1.1rem;
   transition: all 0.3s ease;
-  box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+  box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
 }
 
 .trailer-btn:hover {
   transform: translateY(-3px);
-  box-shadow: 0 15px 40px rgba(212, 175, 55, 0.5);
+  box-shadow: 0 8px 30px rgba(212, 175, 55, 0.6);
 }
 
 /* ================= CAST SECTION ================= */
 .cast-section {
-  margin-top: 3rem;
+  margin-bottom: 3rem;
 }
 
 .cast-section h2 {
@@ -487,49 +501,68 @@ body {
   font-size: 2rem;
   color: var(--primary);
   margin-bottom: 2rem;
+  position: relative;
+  display: inline-block;
+}
+
+.cast-section h2::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 60%;
+  height: 2px;
+  background: var(--primary);
 }
 
 .cast-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 1.5rem;
+  gap: 2rem;
 }
 
 .cast-member {
-  text-align: center;
+  background: var(--card-bg);
+  border-radius: 15px;
+  overflow: hidden;
   cursor: pointer;
-  transition: transform 0.3s ease;
+  transition: all 0.3s ease;
+  text-align: center;
+  box-shadow: 0 5px 20px var(--shadow);
 }
 
 .cast-member:hover {
-  transform: scale(1.05);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
 }
 
 .cast-member img {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
+  width: 100%;
+  height: 200px;
   object-fit: cover;
-  border: 3px solid var(--primary);
-  margin-bottom: 0.5rem;
-  box-shadow: 0 10px 30px var(--shadow);
 }
 
 .cast-member h4 {
-  font-size: 1rem;
-  color: var(--text);
-  margin-bottom: 0.3rem;
+  padding: 1rem;
+  font-family: 'Cinzel', serif;
+  color: var(--primary);
+  font-size: 1.1rem;
 }
 
 .cast-member span {
-  font-size: 0.85rem;
-  color: rgba(224, 224, 224, 0.6);
+  display: block;
+  padding: 0 1rem 1rem;
+  color: var(--text);
+  font-size: 0.9rem;
+  opacity: 0.8;
 }
 
 /* ================= BUTTONS ================= */
 button,
 #backToIndustries {
-  padding: 0.8rem 2rem;
+  padding: 1rem 2.5rem;
+  margin: 2rem auto;
+  display: block;
   background: var(--gold-gradient);
   color: var(--dark);
   border: none;
@@ -579,55 +612,6 @@ footer p {
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-/* ================= RESPONSIVE ================= */
-@media (max-width: 768px) {
-  .navbar {
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .nav-bar {
-    gap: 1.5rem;
-  }
-
-  .search-box input {
-    width: 100%;
-  }
-
-  .hero h1 {
-    font-size: 2.5rem;
-  }
-
-  .hero p {
-    font-size: 1.2rem;
-  }
-
-  .grid,
-  .movie-grid,
-  .actor-grid,
-  .director-grid {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 1rem;
-  }
-
-  .details-header {
-    flex-direction: column;
-  }
-
-  .details-poster {
-    width: 100%;
-    height: auto;
-  }
-
-  .details-info h1 {
-    font-size: 2rem;
-  }
-
-  .industry-banner h1 {
-    font-size: 2.5rem;
   }
 }
 
@@ -848,11 +832,212 @@ footer p {
   font-weight: 600;
 }
 
-/* ================= RESPONSIVE FOR HOME PAGE ================= */
+/* ================= RESPONSIVE DESIGN ================= */
+
+/* Tablets (768px and below) */
 @media (max-width: 768px) {
+  /* Navbar */
+  .navbar {
+    padding: 1rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .logo {
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+  }
+
+  .nav-bar {
+    width: 100%;
+    gap: 0.8rem;
+    flex-direction: row;
+    justify-content: flex-start;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 0.5rem;
+  }
+
+  .nav-bar a {
+    font-size: 0.85rem;
+    padding: 0.3rem 0;
+  }
+
+  .search-box {
+    width: 100%;
+  }
+
+  .search-box input {
+    width: 100%;
+    font-size: 0.9rem;
+    padding: 0.6rem 1rem;
+  }
+
+  /* Hero Section */
+  .hero {
+    min-height: 40vh;
+    padding: 2rem 1rem;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+    line-height: 1.3;
+  }
+
+  .hero p {
+    font-size: 1rem;
+    letter-spacing: 1px;
+  }
+
+  /* Slideshow */
+  .slideshow {
+    height: 300px;
+    margin: 2rem 0;
+  }
+
+  .slide-title {
+    padding: 1.5rem;
+  }
+
+  .slide-title h2 {
+    font-size: 1.5rem;
+  }
+
+  .slide-title span {
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+  }
+
+  /* Featured Section */
+  .featured {
+    padding: 2rem 3%;
+  }
+
+  .featured h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Grids - Smaller cards for mobile */
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .movie-grid,
+  .actor-grid,
+  .director-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  /* Hub Cards - Much smaller font for mobile */
+  .hubCard {
+    height: 120px;
+    font-size: 1.1rem;
+    padding: 0.5rem;
+    text-align: center;
+  }
+
+  /* Movie/Actor Cards */
+  .card img,
+  .movie-card img,
+  .actor-card img {
+    height: 220px;
+  }
+
+  .card h3,
+  .movie-card h3,
+  .actor-card h4 {
+    font-size: 1rem;
+    padding: 0.8rem;
+  }
+
+  .card p,
+  .movie-card p {
+    font-size: 0.85rem;
+    padding: 0 0.8rem 0.8rem;
+  }
+
+  /* Cast Grid */
+  .cast-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .cast-member img {
+    height: 150px;
+  }
+
+  .cast-member h4 {
+    font-size: 0.95rem;
+    padding: 0.8rem;
+  }
+
+  .cast-member span {
+    font-size: 0.8rem;
+  }
+
+  /* Details Page */
+  .details-page {
+    padding: 1rem 3%;
+  }
+
+  .details-header {
+    flex-direction: column;
+    padding: 1.5rem;
+    gap: 1.5rem;
+  }
+
+  .details-poster {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+
+  .details-info h1 {
+    font-size: 1.8rem;
+  }
+
+  .meta {
+    gap: 1rem;
+    font-size: 0.95rem;
+  }
+
+  .meta span {
+    font-size: 0.9rem;
+  }
+
+  .description {
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .trailer-btn {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+  }
+
+  /* Industry Banner */
+  .industry-banner {
+    height: 200px;
+  }
+
+  .industry-banner h1 {
+    font-size: 2rem;
+  }
+
+  /* Cast Section */
+  .cast-section h2 {
+    font-size: 1.5rem;
+  }
+
+  /* Home Navigation Cards */
   .home-nav-grid {
     grid-template-columns: 1fr;
     gap: 1.5rem;
+    padding: 0 1rem;
   }
 
   .home-nav-card {
@@ -860,36 +1045,116 @@ footer p {
   }
 
   .nav-icon {
-    font-size: 3rem;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
   }
 
   .home-nav-card h3 {
     font-size: 1.5rem;
   }
 
+  .home-nav-card p {
+    font-size: 1rem;
+  }
+
+  /* Cinema History */
   .cinema-history {
-    padding: 3rem 5%;
+    padding: 3rem 3%;
   }
 
   .history-title {
-    font-size: 2rem;
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
   }
 
   .history-section {
     padding: 1.5rem;
+    margin-bottom: 1.5rem;
   }
 
   .history-section h3 {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .history-section p {
-    font-size: 1rem;
+    font-size: 0.95rem;
+    line-height: 1.7;
     text-align: left;
   }
 
   .final-thought {
-    font-size: 1rem !important;
+    font-size: 0.95rem !important;
     padding: 1.5rem;
+    line-height: 1.7 !important;
+  }
+
+  /* Buttons */
+  button,
+  #backToIndustries {
+    font-size: 0.9rem;
+    padding: 0.8rem 2rem;
+  }
+}
+
+/* Small Mobile Devices (480px and below) */
+@media (max-width: 480px) {
+  .logo {
+    font-size: 1.2rem;
+  }
+
+  .nav-bar a {
+    font-size: 0.75rem;
+  }
+
+  .hero h1 {
+    font-size: 1.5rem;
+  }
+
+  .hero p {
+    font-size: 0.9rem;
+  }
+
+  .slideshow {
+    height: 250px;
+  }
+
+  .featured h2 {
+    font-size: 1.5rem;
+  }
+
+  /* Single column for very small screens */
+  .grid,
+  .movie-grid,
+  .actor-grid,
+  .director-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hubCard {
+    height: 100px;
+    font-size: 1rem;
+  }
+
+  .cast-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .details-info h1 {
+    font-size: 1.5rem;
+  }
+
+  .industry-banner h1 {
+    font-size: 1.5rem;
+  }
+
+  .home-nav-card h3 {
+    font-size: 1.3rem;
+  }
+
+  .history-title {
+    font-size: 1.5rem;
   }
 }
