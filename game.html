@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movie Quiz | MovieManiac</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- ================= NAVBAR ================= -->
+  <header class="navbar">
+    <div class="logo">🎬 MovieManiac</div>
+    <nav class="nav-bar">
+      <a href="home.html">Home</a>
+      <a href="index.html">Movies</a>
+      <a href="actors.html">Actors</a>
+      <a href="actresses.html">Actresses</a>
+      <a href="comedians.html">Comedians</a>
+      <a href="directors.html">Directors</a>
+      <a href="watchlist.html">Watchlist</a>
+      <a href="game.html" class="active">Game</a>
+    </nav>
+  </header>
+
+  <!-- ================= GAME CONTENT ================= -->
+  <main class="game-container">
+    <div class="game-header">
+      <h1>🎮 Movie Quiz Challenge</h1>
+      <p>Test your movie knowledge!</p>
+    </div>
+
+    <!-- Start Screen -->
+    <div id="startScreen" class="game-screen">
+      <div class="game-card">
+        <h2>Welcome to Movie Quiz!</h2>
+        <p>Guess the movie from the poster and details</p>
+        <div class="high-score" id="highScore"></div>
+        <div class="difficulty-select">
+          <h3>Select Difficulty:</h3>
+          <button class="difficulty-btn" data-difficulty="easy">Easy (5 movies)</button>
+          <button class="difficulty-btn" data-difficulty="medium">Medium (10 movies)</button>
+          <button class="difficulty-btn" data-difficulty="hard">Hard (15 movies)</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Game Screen -->
+    <div id="gameScreen" class="game-screen hidden">
+      <div class="game-stats">
+        <div class="stat">Question: <span id="currentQuestion">1</span>/<span id="totalQuestions">10</span></div>
+        <div class="stat">Score: <span id="currentScore">0</span></div>
+        <div class="stat">Time: <span id="timer">30</span>s</div>
+      </div>
+
+      <div class="game-card">
+        <div class="movie-poster-container">
+          <img id="moviePoster" src="" alt="Movie Poster">
+        </div>
+        <div class="movie-hints">
+          <p><strong>Year:</strong> <span id="movieYear"></span></p>
+          <p><strong>Genre:</strong> <span id="movieGenre"></span></p>
+          <p><strong>Industry:</strong> <span id="movieIndustry"></span></p>
+        </div>
+        <div class="movie-options" id="movieOptions"></div>
+      </div>
+    </div>
+
+    <!-- Result Screen -->
+    <div id="resultScreen" class="game-screen hidden">
+      <div class="game-card result-card">
+        <h2 id="resultTitle"></h2>
+        <div class="final-score">
+          <span class="score-label">Final Score</span>
+          <span class="score-value" id="finalScore">0</span>
+          <span class="score-max">/ <span id="maxScore">100</span></span>
+        </div>
+        <div class="result-message" id="resultMessage"></div>
+        <div class="result-actions">
+          <button class="btn-primary" id="playAgainBtn">Play Again</button>
+          <button class="btn-secondary" id="backHomeBtn">Back to Home</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer>
+    <p>© 2026 MovieManiac - Your Cinematic Journey Begins Here</p>
+  </footer>
+
+  <!-- ================= SCRIPTS ================= -->
+  <script src="js/data.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>

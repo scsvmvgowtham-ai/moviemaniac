@@ -1178,3 +1178,616 @@ footer p {
     font-size: 1.5rem;
   }
 }
+
+/* ================= GENRE FILTER ================= */
+.genre-filter {
+  margin: 2rem 0;
+  padding: 2rem;
+  background: var(--card-bg);
+  border-radius: 15px;
+  box-shadow: 0 5px 20px var(--shadow);
+}
+
+.genre-filter h3 {
+  font-family: 'Cinzel', serif;
+  color: var(--primary);
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.genre-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.genre-btn {
+  padding: 0.8rem 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(212, 175, 55, 0.3);
+  border-radius: 25px;
+  color: var(--text);
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.genre-btn:hover {
+  border-color: var(--primary);
+  background: rgba(212, 175, 55, 0.1);
+  transform: translateY(-2px);
+}
+
+.genre-btn.active {
+  background: var(--gold-gradient);
+  color: var(--dark);
+  border-color: var(--primary);
+  box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+}
+
+/* ================= WATCHLIST BUTTON ================= */
+.watchlist-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 40px;
+  height: 40px;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 10;
+  border: 2px solid transparent;
+}
+
+.watchlist-btn:hover {
+  transform: scale(1.15);
+  background: rgba(0, 0, 0, 0.85);
+}
+
+.watchlist-btn.in-watchlist {
+  border-color: var(--primary);
+  animation: heartbeat 1.5s ease infinite;
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  10%, 30% { transform: scale(1.1); }
+  20%, 40% { transform: scale(1); }
+}
+
+/* ================= WATCHLIST PAGE ================= */
+.watchlist-stats {
+  margin: 2rem 0;
+}
+
+.stats-container {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  flex-wrap: wrap;
+}
+
+.stat-item {
+  background: var(--card-bg);
+  padding: 2rem;
+  border-radius: 15px;
+  text-align: center;
+  min-width: 150px;
+  box-shadow: 0 5px 20px var(--shadow);
+  border: 2px solid rgba(212, 175, 55, 0.2);
+  transition: all 0.3s ease;
+}
+
+.stat-item:hover {
+  transform: translateY(-5px);
+  border-color: var(--primary);
+  box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+}
+
+.stat-number {
+  display: block;
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--primary);
+  font-family: 'Cinzel', serif;
+}
+
+.stat-label {
+  display: block;
+  font-size: 1.1rem;
+  color: var(--text);
+  margin-top: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.empty-watchlist {
+  text-align: center;
+  padding: 4rem 2rem;
+  grid-column: 1 / -1;
+}
+
+.empty-watchlist h3 {
+  font-family: 'Cinzel', serif;
+  color: var(--primary);
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.empty-watchlist p {
+  color: var(--text);
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.btn-primary {
+  display: inline-block;
+  padding: 1rem 2.5rem;
+  background: var(--gold-gradient);
+  color: var(--dark);
+  text-decoration: none;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
+  border: none;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(212, 175, 55, 0.6);
+}
+
+.btn-secondary {
+  display: inline-block;
+  padding: 1rem 2.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text);
+  text-decoration: none;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  border: 2px solid rgba(212, 175, 55, 0.3);
+  cursor: pointer;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: var(--primary);
+  transform: translateY(-2px);
+}
+
+/* ================= NOTIFICATION ================= */
+.notification {
+  position: fixed;
+  bottom: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--card-bg);
+  color: var(--text);
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  box-shadow: 0 10px 40px rgba(212, 175, 55, 0.5);
+  border: 2px solid var(--primary);
+  z-index: 10000;
+  transition: bottom 0.3s ease;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.notification.show {
+  bottom: 30px;
+}
+
+/* ================= GAME STYLES ================= */
+.game-container {
+  min-height: 80vh;
+  padding: 2rem 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.game-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.game-header h1 {
+  font-family: 'Cinzel', serif;
+  font-size: 3rem;
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+}
+
+.game-header p {
+  font-size: 1.3rem;
+  color: var(--text);
+}
+
+.game-screen {
+  width: 100%;
+  max-width: 800px;
+  animation: fadeIn 0.5s ease;
+}
+
+.game-screen.hidden {
+  display: none;
+}
+
+.game-card {
+  background: var(--card-bg);
+  border-radius: 20px;
+  padding: 3rem;
+  box-shadow: 0 10px 40px var(--shadow);
+  text-align: center;
+}
+
+.game-card h2 {
+  font-family: 'Cinzel', serif;
+  color: var(--primary);
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.game-card p {
+  color: var(--text);
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.high-score {
+  background: rgba(212, 175, 55, 0.1);
+  padding: 1.5rem;
+  border-radius: 15px;
+  margin: 2rem 0;
+  border: 2px solid rgba(212, 175, 55, 0.3);
+}
+
+.high-score h3 {
+  font-family: 'Cinzel', serif;
+  color: var(--primary);
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.high-score p {
+  color: var(--text);
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+}
+
+.difficulty-select {
+  margin-top: 2rem;
+}
+
+.difficulty-select h3 {
+  font-family: 'Cinzel', serif;
+  color: var(--primary);
+  margin-bottom: 1.5rem;
+}
+
+.difficulty-btn {
+  display: block;
+  width: 100%;
+  margin: 1rem 0;
+  padding: 1.2rem 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(212, 175, 55, 0.3);
+  border-radius: 15px;
+  color: var(--text);
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+}
+
+.difficulty-btn:hover {
+  background: rgba(212, 175, 55, 0.1);
+  border-color: var(--primary);
+  transform: translateX(10px);
+}
+
+.game-stats {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.game-stats .stat {
+  background: var(--card-bg);
+  padding: 1rem 2rem;
+  border-radius: 15px;
+  font-size: 1.1rem;
+  color: var(--text);
+  border: 2px solid rgba(212, 175, 55, 0.2);
+}
+
+.game-stats .stat span {
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 1.3rem;
+}
+
+.movie-poster-container {
+  margin: 2rem 0;
+}
+
+.movie-poster-container img {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px var(--shadow);
+}
+
+.movie-hints {
+  background: rgba(212, 175, 55, 0.1);
+  padding: 1.5rem;
+  border-radius: 15px;
+  margin: 2rem 0;
+  text-align: left;
+}
+
+.movie-hints p {
+  margin: 0.8rem 0;
+  font-size: 1.1rem;
+}
+
+.movie-hints strong {
+  color: var(--primary);
+}
+
+.movie-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.option-btn {
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(212, 175, 55, 0.3);
+  border-radius: 15px;
+  color: var(--text);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.option-btn:hover:not(:disabled) {
+  background: rgba(212, 175, 55, 0.1);
+  border-color: var(--primary);
+  transform: scale(1.05);
+}
+
+.option-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.option-btn.correct {
+  background: rgba(76, 175, 80, 0.3);
+  border-color: #4CAF50;
+  animation: correctAnswer 0.5s ease;
+}
+
+.option-btn.wrong {
+  background: rgba(244, 67, 54, 0.3);
+  border-color: #f44336;
+  animation: wrongAnswer 0.5s ease;
+}
+
+@keyframes correctAnswer {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+@keyframes wrongAnswer {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  75% { transform: translateX(10px); }
+}
+
+.feedback-message {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 10px;
+  font-weight: 600;
+  animation: slideIn 0.3s ease;
+}
+
+.correct-feedback {
+  background: rgba(76, 175, 80, 0.2);
+  border: 2px solid #4CAF50;
+  color: #4CAF50;
+}
+
+.wrong-feedback {
+  background: rgba(244, 67, 54, 0.2);
+  border: 2px solid #f44336;
+  color: #f44336;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.result-card {
+  padding: 4rem 3rem;
+}
+
+.final-score {
+  margin: 2rem 0;
+}
+
+.score-label {
+  display: block;
+  font-size: 1.2rem;
+  color: var(--text);
+  margin-bottom: 1rem;
+}
+
+.score-value {
+  display: block;
+  font-size: 5rem;
+  font-weight: 700;
+  color: var(--primary);
+  font-family: 'Cinzel', serif;
+  line-height: 1;
+}
+
+.score-max {
+  display: block;
+  font-size: 1.5rem;
+  color: var(--text);
+  margin-top: 0.5rem;
+}
+
+.result-message {
+  margin: 2rem 0;
+  padding: 2rem;
+  background: rgba(212, 175, 55, 0.1);
+  border-radius: 15px;
+}
+
+.result-message p {
+  margin: 1rem 0;
+  font-size: 1.2rem;
+}
+
+.high-score-badge {
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 1.4rem !important;
+  animation: pulse 1s ease infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.result-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.no-results {
+  text-align: center;
+  color: var(--text);
+  font-size: 1.2rem;
+  padding: 3rem;
+  grid-column: 1 / -1;
+}
+
+/* ================= MOBILE RESPONSIVENESS FOR NEW FEATURES ================= */
+@media (max-width: 768px) {
+  .genre-filter {
+    padding: 1.5rem;
+  }
+
+  .genre-filter h3 {
+    font-size: 1.3rem;
+  }
+
+  .genre-btn {
+    font-size: 0.85rem;
+    padding: 0.6rem 1rem;
+  }
+
+  .stats-container {
+    gap: 1.5rem;
+  }
+
+  .stat-item {
+    min-width: 120px;
+    padding: 1.5rem;
+  }
+
+  .stat-number {
+    font-size: 2.5rem;
+  }
+
+  .stat-label {
+    font-size: 0.9rem;
+  }
+
+  .game-header h1 {
+    font-size: 2rem;
+  }
+
+  .game-header p {
+    font-size: 1rem;
+  }
+
+  .game-card {
+    padding: 2rem 1.5rem;
+  }
+
+  .game-card h2 {
+    font-size: 1.8rem;
+  }
+
+  .game-stats {
+    gap: 0.5rem;
+  }
+
+  .game-stats .stat {
+    padding: 0.8rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .movie-options {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+  }
+
+  .option-btn {
+    padding: 1.2rem;
+    font-size: 0.95rem;
+  }
+
+  .score-value {
+    font-size: 3.5rem;
+  }
+
+  .result-card {
+    padding: 2rem 1.5rem;
+  }
+
+  .result-actions {
+    flex-direction: column;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    width: 100%;
+  }
+}
