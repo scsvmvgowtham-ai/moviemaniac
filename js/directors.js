@@ -1,4 +1,4 @@
-// ================= DIRECTORS PAGE - directors.js =================
+// ================= ENHANCED DIRECTORS PAGE WITH TIMELINE - directors.js =================
 
 document.addEventListener("DOMContentLoaded", () => {
   const industryHub = document.getElementById("industryHub");
@@ -18,59 +18,123 @@ document.addEventListener("DOMContentLoaded", () => {
     industryHub.appendChild(hubCard);
   });
 
+  // ================= HELPER: GET DECADE FROM BIRTH YEAR =================
+  function getDecadeFromBorn(bornString) {
+    if (!bornString) return "Unknown Era";
+    
+    const yearMatch = bornString.match(/\d{4}/);
+    if (!yearMatch) return "Unknown Era";
+    
+    const year = parseInt(yearMatch[0]);
+    const decade = Math.floor(year / 10) * 10;
+    
+    return `${decade}s`;
+  }
+
+  // ================= CATEGORIZE DIRECTORS BY DECADE =================
+  function categorizeDirectorsByDecade(directorsList) {
+    const decades = {};
+    
+    directorsList.forEach(director => {
+      const decade = getDecadeFromBorn(director.born);
+      
+      if (!decades[decade]) {
+        decades[decade] = [];
+      }
+      decades[decade].push(director);
+    });
+    
+    const sortedDecades = Object.keys(decades).sort((a, b) => {
+      if (a === "Unknown Era") return 1;
+      if (b === "Unknown Era") return -1;
+      return parseInt(a) - parseInt(b);
+    });
+    
+    return { decades, sortedDecades };
+  }
+
   // ================= OPEN INDUSTRY =================
   function openIndustry(industry) {
     industryHub.style.display = "none";
-    backBtn.style.display = "block";
+    if (backBtn) backBtn.style.display = "block";
     showDirectorsByIndustry(industry);
   }
 
-  // ================= DISPLAY DIRECTORS =================
+  // ================= DISPLAY DIRECTORS BY INDUSTRY WITH TIMELINES =================
   function showDirectorsByIndustry(selectedIndustry) {
     container.innerHTML = "";
 
     const title = document.createElement("h2");
     title.textContent = `${selectedIndustry} Directors`;
-    title.style.color = "#d4af37";
-    title.style.margin = "30px 0";
-    title.style.textAlign = "center";
-    title.style.fontFamily = "'Cinzel', serif";
+    title.style.cssText = "color: var(--primary-gold); margin: 30px 0; text-align: center; font-family: var(--font-heading); font-size: 2.5rem; text-shadow: var(--shadow-glow);";
     container.appendChild(title);
 
     // Add search box
     const searchBox = document.createElement("div");
-    searchBox.style.textAlign = "center";
-    searchBox.style.marginBottom = "30px";
+    searchBox.style.cssText = "text-align: center; margin-bottom: 30px;";
     searchBox.innerHTML = `
       <input
         type="text"
         id="directorSearch"
         placeholder="Search directors..."
-        style="padding:12px 20px;width:300px;background:rgba(255,255,255,0.05);border:2px solid rgba(212,175,55,0.3);border-radius:50px;color:#e0e0e0;font-size:1rem;"
+        style="padding: 12px 20px; width: 300px; max-width: 90%; background: rgba(255,255,255,0.04); border: 1px solid var(--border-primary); border-radius: var(--radius-full); color: var(--text-primary); font-size: 1rem; font-family: var(--font-body);"
       >
     `;
     container.appendChild(searchBox);
 
-    const grid = document.createElement("div");
-    grid.className = "director-grid";
-    grid.id = "directorGrid";
+    const filteredDirectors = directors.filter(d => d.industry.includes(selectedIndustry));
+    
+    const { decades, sortedDecades } = categorizeDirectorsByDecade(filteredDirectors);
 
-    const filteredDirectors = directors.filter(d => d.industry === selectedIndustry);
-
-    // Display all directors initially
-    displayDirectors(filteredDirectors, grid);
-
-    container.appendChild(grid);
+    sortedDecades.forEach(decade => {
+      const timelineSection = document.createElement("div");
+      timelineSection.className = "timeline-section";
+      
+      const decadeTitle = document.createElement("h3");
+      decadeTitle.textContent = `Born in the ${decade}`;
+      decadeTitle.style.cssText = "color: var(--primary-gold); font-size: 2rem; margin-bottom: 2rem; text-shadow: var(--shadow-glow);";
+      timelineSection.appendChild(decadeTitle);
+      
+      const grid = document.createElement("div");
+      grid.className = "timeline-grid actor-grid";
+      grid.dataset.decade = decade;
+      
+      displayDirectors(decades[decade], grid);
+      
+      timelineSection.appendChild(grid);
+      container.appendChild(timelineSection);
+    });
 
     // Add search functionality
     const searchInput = document.getElementById("directorSearch");
     if (searchInput) {
       searchInput.addEventListener("input", () => {
         const value = searchInput.value.toLowerCase();
-        const searchResults = filteredDirectors.filter(d =>
-          d.name.toLowerCase().includes(value)
-        );
-        displayDirectors(searchResults, grid);
+        
+        if (value === "") {
+          document.querySelectorAll('.timeline-section').forEach(section => {
+            section.style.display = 'block';
+          });
+        } else {
+          const searchResults = filteredDirectors.filter(d =>
+            d.name.toLowerCase().includes(value)
+          );
+          
+          document.querySelectorAll('.timeline-section').forEach(section => {
+            section.style.display = 'none';
+          });
+          
+          const { decades: searchDecades, sortedDecades: searchSortedDecades } = categorizeDirectorsByDecade(searchResults);
+          
+          searchSortedDecades.forEach(decade => {
+            const grid = container.querySelector(`[data-decade="${decade}"]`);
+            if (grid) {
+              const section = grid.closest('.timeline-section');
+              section.style.display = 'block';
+              displayDirectors(searchDecades[decade], grid);
+            }
+          });
+        }
       });
     }
   }
@@ -85,6 +149,7 @@ document.addEventListener("DOMContentLoaded", () => {
       card.innerHTML = `
         <img src="${director.photo}" alt="${director.name}">
         <h4>${director.name}</h4>
+        ${director.born ? `<p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.5rem;">Born: ${director.born}</p>` : ''}
       `;
       card.onclick = () => {
         window.location.href = `director-details.html?id=${director.id}`;
@@ -92,18 +157,19 @@ document.addEventListener("DOMContentLoaded", () => {
       gridElement.appendChild(card);
     });
 
-    // Show message if no directors found
     if (directorList.length === 0) {
-      gridElement.innerHTML = "<p style='text-align:center;color:#e0e0e0;'>No directors found.</p>";
+      gridElement.innerHTML = "<p style='text-align:center;color:var(--text-secondary);padding:2rem;'>No directors found.</p>";
     }
   }
 
   // ================= BACK BUTTON =================
-  backBtn.onclick = () => {
-    container.innerHTML = "";
-    industryHub.style.display = "grid";
-    backBtn.style.display = "none";
-  };
+  if (backBtn) {
+    backBtn.onclick = () => {
+      container.innerHTML = "";
+      industryHub.style.display = "grid";
+      backBtn.style.display = "none";
+    };
+  }
 
   // ================= URL PARAMETER HANDLING =================
   const params = new URLSearchParams(window.location.search);

@@ -26,15 +26,36 @@
   <main class="game-container">
     <div class="game-header">
       <h1>🎮 Movie Quiz Challenge</h1>
-      <p>Test your movie knowledge!</p>
+      <p>Test your movie knowledge in three exciting modes!</p>
     </div>
 
     <!-- Start Screen -->
     <div id="startScreen" class="game-screen">
       <div class="game-card">
         <h2>Welcome to Movie Quiz!</h2>
-        <p>Guess the movie from the poster and details</p>
+        <p>Choose your game mode and difficulty</p>
         <div class="high-score" id="highScore"></div>
+        
+        <!-- Game Mode Selection -->
+        <div class="game-mode-select">
+          <h3>Select Game Mode:</h3>
+          <div class="mode-buttons">
+            <button class="mode-btn" data-mode="classic">
+              <h4>🎯 Classic Quiz</h4>
+              <p>Identify movies from poster, year, genre, and industry</p>
+            </button>
+            <button class="mode-btn" data-mode="charades">
+              <h4>🎭 Dumb Charades</h4>
+              <p>Show the movie name to your team and act it out!</p>
+            </button>
+            <button class="mode-btn" data-mode="blur">
+              <h4>🔍 Blur Image</h4>
+              <p>Identify movies from blurred scenes (reveal for hints)</p>
+            </button>
+          </div>
+        </div>
+        
+        <!-- Difficulty Selection -->
         <div class="difficulty-select">
           <h3>Select Difficulty:</h3>
           <button class="difficulty-btn" data-difficulty="easy">Easy (5 movies)</button>
@@ -90,6 +111,7 @@
 
   <!-- ================= SCRIPTS ================= -->
   <script src="js/data.js"></script>
+  <script src="js/game-images.js"></script>
   <script src="js/game.js"></script>
 </body>
 </html>

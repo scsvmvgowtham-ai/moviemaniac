@@ -5,6 +5,64 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Actress Details | MovieManiac</title>
   <link rel="stylesheet" href="css/style.css">
+  <style>
+    .details-header {
+      display: flex;
+      gap: 2rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      border-radius: 15px;
+      padding: 2rem;
+      margin: 2rem 0;
+    }
+    
+    .details-poster {
+      width: 300px;
+      height: 400px;
+      object-fit: cover;
+      border-radius: 10px;
+      flex-shrink: 0;
+    }
+    
+    .details-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .info-row {
+      display: flex;
+      gap: 0.5rem;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+    }
+    
+    .info-row:last-child {
+      border-bottom: none;
+    }
+    
+    .info-label {
+      font-weight: bold;
+      color: #d4af37;
+      min-width: 120px;
+      font-size: 0.95rem;
+    }
+    
+    .info-value {
+      color: #e0e0e0;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+    
+    .bio-value {
+      color: #e0e0e0;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      text-align: justify;
+      margin-top: 0.5rem;
+    }
+  </style>
 </head>
 <body>
   <!-- ================= NAVBAR ================= -->
@@ -24,10 +82,52 @@
     <div class="details-header">
       <img id="actressImage" class="details-poster" alt="Actress">
       <div class="details-info">
-        <h1 id="actressName"></h1>
-        <p id="actressIndustry" style="font-size:1.2rem;color:#d4af37;margin-bottom:2rem;"></p>
+        <h1 id="actressName" style="color:#d4af37;margin:0 0 0.5rem 0;"></h1>
+        <p id="actressIndustry" style="font-size:1.1rem;color:#d4af37;margin:0 0 1rem 0;"></p>
+        
+        <div class="info-row">
+          <span class="info-label">Full Name:</span>
+          <span id="actressFullName" class="info-value"></span>
+        </div>
+        
+        <div class="info-row">
+          <span class="info-label">Born:</span>
+          <span id="actressBorn" class="info-value"></span>
+        </div>
+        
+        <div class="info-row">
+          <span class="info-label">Birth Place:</span>
+          <span id="actressBirthPlace" class="info-value"></span>
+        </div>
+        
+        <div class="info-row">
+          <span class="info-label">Spouse:</span>
+          <span id="actressSpouse" class="info-value"></span>
+        </div>
+        
+        <div class="info-row">
+          <span class="info-label">Parents:</span>
+          <span id="actressParents" class="info-value"></span>
+        </div>
+        
+        <div class="info-row">
+          <span class="info-label">Siblings:</span>
+          <span id="actressSiblings" class="info-value"></span>
+        </div>
+        
+        <div class="info-row">
+          <span class="info-label">Achievements:</span>
+          <span id="actressAchievements" class="info-value"></span>
+        </div>
+        
+        <div class="info-row" style="flex-direction:column;border-bottom:none;padding-top:1rem;">
+          <span class="info-label">Biography:</span>
+          <span id="actressBio" class="bio-value"></span>
+        </div>
       </div>
     </div>
+
+    <!-- ================= MOVIES ================= -->
     <section class="cast-section">
       <h2>Movies</h2>
       <div id="actressMovies" class="movie-grid"></div>

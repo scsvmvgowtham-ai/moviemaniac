@@ -5,6 +5,83 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Actor Details | MovieManiac</title>
   <link rel="stylesheet" href="css/style.css">
+  <style>
+    .details-header {
+      display: flex;
+      gap: 2rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      border-radius: 15px;
+      padding: 2rem;
+      margin: 2rem 0;
+    }
+    
+    .details-poster {
+      width: 300px;
+      height: 400px;
+      object-fit: cover;
+      border-radius: 10px;
+      flex-shrink: 0;
+    }
+    
+    .details-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    /* NEW: Roles badges styling */
+    .roles-container {
+      display: flex;
+      gap: 8px;
+      margin: 8px 0 16px 0;
+      flex-wrap: wrap;
+    }
+    
+    .role-badge {
+      background: rgba(212, 175, 55, 0.15);
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      color: #d4af37;
+      font-weight: 500;
+      text-transform: capitalize;
+    }
+    
+    .info-row {
+      display: flex;
+      gap: 0.5rem;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+    }
+    
+    .info-row:last-child {
+      border-bottom: none;
+    }
+    
+    .info-label {
+      font-weight: bold;
+      color: #d4af37;
+      min-width: 120px;
+      font-size: 0.95rem;
+    }
+    
+    .info-value {
+      color: #e0e0e0;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+    
+    .bio-value {
+      color: #e0e0e0;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      text-align: justify;
+      margin-top: 0.5rem;
+    }
+  </style>
 </head>
 <body>
   <!-- ================= NAVBAR ================= -->
@@ -24,10 +101,56 @@
     <div class="details-header">
       <img id="actorImage" class="details-poster" alt="Actor">
       <div class="details-info">
-        <h1 id="actorName"></h1>
-        <p id="actorIndustry" style="font-size:1.2rem;color:#d4af37;margin-bottom:2rem;"></p>
+        <h1 id="actorName" style="color:#d4af37;margin:0 0 0.5rem 0;"></h1>
+        
+        <!-- NEW: Roles badges -->
+        <div id="actorRoles" class="roles-container"></div>
+        
+        <p id="actorIndustry" style="font-size:1.1rem;color:#d4af37;margin:0 0 1rem 0;"></p>
+        
+        <div class="info-row">
+          <span class="info-label">Full Name:</span>
+          <span id="actorFullName" class="info-value"></span>
+        </div>
+        
+        <div class="info-row">
+          <span class="info-label">Born:</span>
+          <span id="actorBorn" class="info-value"></span>
+        </div>
+        
+        <div class="info-row">
+          <span class="info-label">Birth Place:</span>
+          <span id="actorBirthPlace" class="info-value"></span>
+        </div>
+        
+        <div class="info-row">
+          <span class="info-label">Spouse:</span>
+          <span id="actorSpouse" class="info-value"></span>
+        </div>
+        
+        <div class="info-row">
+          <span class="info-label">Parents:</span>
+          <span id="actorParents" class="info-value"></span>
+        </div>
+        
+        <div class="info-row">
+          <span class="info-label">Siblings:</span>
+          <span id="actorSiblings" class="info-value"></span>
+        </div>
+        
+        <div class="info-row">
+          <span class="info-label">Achievements:</span>
+          <span id="actorAchievements" class="info-value"></span>
+        </div>
+        
+        <div class="info-row" style="flex-direction:column;border-bottom:none;padding-top:1rem;">
+          <span class="info-label">Biography:</span>
+          <span id="actorBio" class="bio-value"></span>
+        </div>
       </div>
     </div>
+
+    <!-- ================= MOVIES ================= -->
     <section class="cast-section">
       <h2>Movies</h2>
       <div id="actorMovies" class="movie-grid"></div>

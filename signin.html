@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In | MovieManiac</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- ================= NAVBAR ================= -->
+  <header class="navbar">
+    <div class="logo">🎬 MovieManiac</div>
+    <nav class="nav-bar">
+      <a href="home.html">Home</a>
+      <a href="index.html">Movies</a>
+      <a href="actors.html">Actors</a>
+      <a href="actresses.html">Actresses</a>
+      <a href="comedians.html">Comedians</a>
+      <a href="directors.html">Directors</a>
+      <a href="watchlist.html">Watchlist</a>
+      <a href="game.html">Game</a>
+      <div id="authNav"></div>
+    </nav>
+  </header>
+
+  <!-- ================= SIGN IN CONTENT ================= -->
+  <main class="auth-container">
+    <div class="auth-card">
+      <h1>🎬 Welcome Back!</h1>
+      <p class="auth-subtitle">Sign in to access your watchlist and saved preferences</p>
+
+      <!-- Login Form -->
+      <div id="loginForm" class="auth-form">
+        <h2>Login</h2>
+        <input type="text" id="loginEmail" placeholder="Email or Username" required>
+        <input type="password" id="loginPassword" placeholder="Password" required>
+        <button class="btn-primary" onclick="handleLogin()">Login</button>
+        <p class="auth-switch">Don't have an account? <a href="#" onclick="showSignup()">Sign Up</a></p>
+      </div>
+
+      <!-- Signup Form -->
+      <div id="signupForm" class="auth-form" style="display: none;">
+        <h2>Create Account</h2>
+        <input type="text" id="signupUsername" placeholder="Username" required>
+        <input type="email" id="signupEmail" placeholder="Email" required>
+        <input type="password" id="signupPassword" placeholder="Password" required>
+        
+        <label for="favoriteChar" style="color: #d4af37; margin-top: 1rem; display: block;">Choose Your Character Name</label>
+        <select id="favoriteChar" required>
+          <option value="">Select a character...</option>
+          <optgroup label="Iconic Characters">
+            <option value="🦸 Iron Man">🦸 Iron Man</option>
+            <option value="🦇 Batman">🦇 Batman</option>
+            <option value="🕷️ Spider-Man">🕷️ Spider-Man</option>
+            <option value="⚡ Thor">⚡ Thor</option>
+            <option value="🛡️ Captain America">🛡️ Captain America</option>
+            <option value="💚 Hulk">💚 Hulk</option>
+            <option value="🐱 Black Panther">🐱 Black Panther</option>
+            <option value="⚔️ Wonder Woman">⚔️ Wonder Woman</option>
+            <option value="🦅 Superman">🦅 Superman</option>
+            <option value="🔥 Phoenix">🔥 Phoenix</option>
+          </optgroup>
+          <optgroup label="Legendary Heroes">
+            <option value="🗡️ Aragorn">🗡️ Aragorn</option>
+            <option value="🧙 Gandalf">🧙 Gandalf</option>
+            <option value="⚡ Harry Potter">⚡ Harry Potter</option>
+            <option value="🦁 Simba">🦁 Simba</option>
+            <option value="🌊 Moana">🌊 Moana</option>
+            <option value="❄️ Elsa">❄️ Elsa</option>
+            <option value="🏹 Katniss">🏹 Katniss</option>
+            <option value="🎯 Hawkeye">🎯 Hawkeye</option>
+            <option value="🌟 Luke Skywalker">🌟 Luke Skywalker</option>
+            <option value="⚔️ Rey">⚔️ Rey</option>
+          </optgroup>
+          <optgroup label="Action Stars">
+            <option value="🔫 James Bond">🔫 James Bond</option>
+            <option value="🕶️ Neo">🕶️ Neo</option>
+            <option value="🤖 Terminator">🤖 Terminator</option>
+            <option value="🚗 Fast & Furious">🚗 Fast & Furious</option>
+            <option value="🏴‍☠️ Jack Sparrow">🏴‍☠️ Jack Sparrow</option>
+            <option value="🎭 Joker">🎭 Joker</option>
+            <option value="👑 T'Challa">👑 T'Challa</option>
+            <option value="🎪 Deadpool">🎪 Deadpool</option>
+          </optgroup>
+          <optgroup label="Classic Icons">
+            <option value="🎬 Godfather">🎬 Godfather</option>
+            <option value="💼 Tony Soprano">💼 Tony Soprano</option>
+            <option value="🌹 Rose (Titanic)">🌹 Rose (Titanic)</option>
+            <option value="💍 Frodo">💍 Frodo</option>
+            <option value="🎯 Sherlock">🎯 Sherlock</option>
+          </optgroup>
+        </select>
+        
+        <button class="btn-primary" onclick="handleSignup()">Create Account</button>
+        <p class="auth-switch">Already have an account? <a href="#" onclick="showLogin()">Login</a></p>
+      </div>
+
+      <div id="authMessage" class="auth-message"></div>
+    </div>
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer>
+    <p>© 2026 MovieManiac - Your Cinematic Journey Begins Here</p>
+  </footer>
+
+  <!-- ================= SCRIPTS ================= -->
+  <script src="js/data.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/navigation.js"></script>
+  <script>
+    function showSignup() {
+      document.getElementById('loginForm').style.display = 'none';
+      document.getElementById('signupForm').style.display = 'block';
+      document.getElementById('authMessage').textContent = '';
+    }
+
+    function showLogin() {
+      document.getElementById('signupForm').style.display = 'none';
+      document.getElementById('loginForm').style.display = 'block';
+      document.getElementById('authMessage').textContent = '';
+    }
+
+    function handleLogin() {
+      const email = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value;
+
+      if (!email || !password) {
+        showMessage('Please fill in all fields', 'error');
+        return;
+      }
+
+      const result = window.MovieManiacAuth.login(email, password);
+      
+      if (result.success) {
+        showMessage(result.message, 'success');
+        setTimeout(() => {
+          window.location.href = 'home.html';
+        }, 1000);
+      } else {
+        showMessage(result.message, 'error');
+      }
+    }
+
+    function handleSignup() {
+      const username = document.getElementById('signupUsername').value.trim();
+      const email = document.getElementById('signupEmail').value.trim();
+      const password = document.getElementById('signupPassword').value;
+      const character = document.getElementById('favoriteChar').value;
+
+      if (!username || !email || !password || !character) {
+        showMessage('Please fill in all fields', 'error');
+        return;
+      }
+
+      if (password.length < 6) {
+        showMessage('Password must be at least 6 characters', 'error');
+        return;
+      }
+
+      const result = window.MovieManiacAuth.signUp(username, email, password, character);
+      
+      if (result.success) {
+        showMessage(result.message, 'success');
+        setTimeout(() => {
+          window.location.href = 'home.html';
+        }, 1000);
+      } else {
+        showMessage(result.message, 'error');
+      }
+    }
+
+    function showMessage(message, type) {
+      const msgDiv = document.getElementById('authMessage');
+      msgDiv.textContent = message;
+      msgDiv.className = 'auth-message ' + (type === 'success' ? 'success' : 'error');
+    }
+
+    // Check if already logged in
+    if (window.MovieManiacAuth.isLoggedIn()) {
+      window.location.href = 'profile.html';
+    }
+  </script>
+</body>
+</html>

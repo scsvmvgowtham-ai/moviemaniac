@@ -5,6 +5,64 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Director Details | MovieManiac</title>
   <link rel="stylesheet" href="css/style.css">
+  <style>
+    .details-header {
+      display: flex;
+      gap: 2rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      border-radius: 15px;
+      padding: 2rem;
+      margin: 2rem 0;
+    }
+    
+    .details-poster {
+      width: 300px;
+      height: 400px;
+      object-fit: cover;
+      border-radius: 10px;
+      flex-shrink: 0;
+    }
+    
+    .details-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .info-row {
+      display: flex;
+      gap: 0.5rem;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+    }
+    
+    .info-row:last-child {
+      border-bottom: none;
+    }
+    
+    .info-label {
+      font-weight: bold;
+      color: #d4af37;
+      min-width: 120px;
+      font-size: 0.95rem;
+    }
+    
+    .info-value {
+      color: #e0e0e0;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+    
+    .bio-value {
+      color: #e0e0e0;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      text-align: justify;
+      margin-top: 0.5rem;
+    }
+  </style>
 </head>
 <body>
   <!-- ================= NAVBAR ================= -->
@@ -20,7 +78,61 @@
   </header>
 
   <!-- ================= MAIN CONTENT ================= -->
-  <section class="featured" id="directorDetails"></section>
+  <main class="details-page">
+    <div class="details-header">
+      <img id="directorImage" class="details-poster" alt="Director">
+      <div class="details-info">
+        <h1 id="directorName" style="color:#d4af37;margin:0 0 0.5rem 0;"></h1>
+        <p id="directorIndustry" style="font-size:1.1rem;color:#d4af37;margin:0 0 1rem 0;"></p>
+        
+        <div class="info-row">
+          <span class="info-label">Full Name:</span>
+          <span id="directorFullName" class="info-value"></span>
+        </div>
+        
+        <div class="info-row">
+          <span class="info-label">Born:</span>
+          <span id="directorBorn" class="info-value"></span>
+        </div>
+        
+        <div class="info-row">
+          <span class="info-label">Birth Place:</span>
+          <span id="directorBirthPlace" class="info-value"></span>
+        </div>
+        
+        <div class="info-row">
+          <span class="info-label">Spouse:</span>
+          <span id="directorSpouse" class="info-value"></span>
+        </div>
+        
+        <div class="info-row">
+          <span class="info-label">Parents:</span>
+          <span id="directorParents" class="info-value"></span>
+        </div>
+        
+        <div class="info-row">
+          <span class="info-label">Siblings:</span>
+          <span id="directorSiblings" class="info-value"></span>
+        </div>
+        
+        <div class="info-row">
+          <span class="info-label">Achievements:</span>
+          <span id="directorAchievements" class="info-value"></span>
+        </div>
+        
+        <div class="info-row" style="flex-direction:column;border-bottom:none;padding-top:1rem;">
+          <span class="info-label">Biography:</span>
+          <span id="directorBio" class="bio-value"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= MOVIES ================= -->
+    <section class="cast-section">
+      <h2>Movies</h2>
+      <div id="directorMovies" class="movie-grid"></div>
+    </section>
+  </main>
 
   <!-- ================= FOOTER ================= -->
   <footer>

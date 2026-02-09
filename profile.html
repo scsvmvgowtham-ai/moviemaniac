@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Profile | MovieManiac</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- ================= NAVBAR ================= -->
+  <header class="navbar">
+    <div class="logo">🎬 MovieManiac</div>
+    <nav class="nav-bar">
+      <a href="home.html">Home</a>
+      <a href="index.html">Movies</a>
+      <a href="actors.html">Actors</a>
+      <a href="actresses.html">Actresses</a>
+      <a href="comedians.html">Comedians</a>
+      <a href="directors.html">Directors</a>
+      <a href="watchlist.html">Watchlist</a>
+      <a href="game.html">Game</a>
+      <div id="authNav"></div>
+    </nav>
+  </header>
+
+  <!-- ================= PROFILE CONTENT ================= -->
+  <main class="profile-container">
+    <div class="profile-card">
+      <h1>👤 My Profile</h1>
+      
+      <div class="profile-info">
+        <div class="profile-avatar">
+          <span id="profileCharacter" style="font-size: 5rem;"></span>
+        </div>
+        
+        <div class="profile-details">
+          <h2 id="profileUsername"></h2>
+          <p id="profileEmail"></p>
+          <p id="profileMember"></p>
+        </div>
+      </div>
+
+      <div class="profile-stats">
+        <div class="stat-box">
+          <span class="stat-number" id="watchlistCount">0</span>
+          <span class="stat-label">Movies in Watchlist</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-number" id="gameScore">0</span>
+          <span class="stat-label">Best Game Score</span>
+        </div>
+      </div>
+
+      <div class="profile-actions">
+        <a href="watchlist.html" class="btn-primary">View Watchlist</a>
+        <a href="game.html" class="btn-primary">Play Game</a>
+        <button class="btn-secondary" onclick="handleLogout()">Logout</button>
+      </div>
+
+      <div class="profile-edit">
+        <h3>Change Character</h3>
+        <select id="newCharacter">
+          <option value="">Select new character...</option>
+          <optgroup label="Iconic Characters">
+            <option value="🦸 Iron Man">🦸 Iron Man</option>
+            <option value="🦇 Batman">🦇 Batman</option>
+            <option value="🕷️ Spider-Man">🕷️ Spider-Man</option>
+            <option value="⚡ Thor">⚡ Thor</option>
+            <option value="🛡️ Captain America">🛡️ Captain America</option>
+            <option value="💚 Hulk">💚 Hulk</option>
+            <option value="🐱 Black Panther">🐱 Black Panther</option>
+            <option value="⚔️ Wonder Woman">⚔️ Wonder Woman</option>
+            <option value="🦅 Superman">🦅 Superman</option>
+            <option value="🔥 Phoenix">🔥 Phoenix</option>
+          </optgroup>
+          <optgroup label="Legendary Heroes">
+            <option value="🗡️ Aragorn">🗡️ Aragorn</option>
+            <option value="🧙 Gandalf">🧙 Gandalf</option>
+            <option value="⚡ Harry Potter">⚡ Harry Potter</option>
+            <option value="🦁 Simba">🦁 Simba</option>
+            <option value="🌊 Moana">🌊 Moana</option>
+            <option value="❄️ Elsa">❄️ Elsa</option>
+            <option value="🏹 Katniss">🏹 Katniss</option>
+            <option value="🎯 Hawkeye">🎯 Hawkeye</option>
+            <option value="🌟 Luke Skywalker">🌟 Luke Skywalker</option>
+            <option value="⚔️ Rey">⚔️ Rey</option>
+          </optgroup>
+          <optgroup label="Action Stars">
+            <option value="🔫 James Bond">🔫 James Bond</option>
+            <option value="🕶️ Neo">🕶️ Neo</option>
+            <option value="🤖 Terminator">🤖 Terminator</option>
+            <option value="🚗 Fast & Furious">🚗 Fast & Furious</option>
+            <option value="💎 Jack Sparrow">💎 Jack Sparrow</option>
+            <option value="🎭 Joker">🎭 Joker</option>
+            <option value="👑 T'Challa">👑 T'Challa</option>
+            <option value="🎪 Deadpool">🎪 Deadpool</option>
+          </optgroup>
+          <optgroup label="Classic Icons">
+            <option value="🎬 Godfather">🎬 Godfather</option>
+            <option value="👔 Tony Soprano">👔 Tony Soprano</option>
+            <option value="🌹 Rose (Titanic)">🌹 Rose (Titanic)</option>
+            <option value="💍 Frodo">💍 Frodo</option>
+            <option value="🎯 Sherlock">🎯 Sherlock</option>
+          </optgroup>
+        </select>
+        <button class="btn-primary" onclick="updateCharacter()">Update Character</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer>
+    <p>© 2026 MovieManiac - Your Cinematic Journey Begins Here</p>
+  </footer>
+
+  <!-- ================= SCRIPTS ================= -->
+  <script src="js/data.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/navigation.js"></script>
+  <script>
+    // Check if logged in
+    const user = window.MovieManiacAuth.getCurrentUser();
+    if (!user) {
+      window.location.href = 'signin.html';
+    }
+
+    // Load profile data
+    document.getElementById('profileCharacter').textContent = user.favoriteCharacter.split(' ')[0];
+    document.getElementById('profileUsername').textContent = user.username;
+    document.getElementById('profileEmail').textContent = user.email;
+    
+    const joinDate = new Date(user.createdAt).toLocaleDateString();
+    document.getElementById('profileMember').textContent = `Member since ${joinDate}`;
+
+    // Load watchlist count
+    const watchlist = localStorage.getItem('moviemaniac_watchlist');
+    const count = watchlist ? JSON.parse(watchlist).length : 0;
+    document.getElementById('watchlistCount').textContent = count;
+
+    // Load best game score
+    const scores = localStorage.getItem('moviemaniac_game_scores');
+    if (scores) {
+      const scoresObj = JSON.parse(scores);
+      const allScores = [
+        ...Object.values(scoresObj.easy || {}),
+        ...Object.values(scoresObj.medium || {}),
+        ...Object.values(scoresObj.hard || {})
+      ].filter(s => s > 0);
+      const bestScore = allScores.length > 0 ? Math.max(...allScores) : 0;
+      document.getElementById('gameScore').textContent = bestScore;
+    }
+
+    function handleLogout() {
+      if (confirm('Are you sure you want to logout?')) {
+        window.MovieManiacAuth.logout();
+        window.location.href = 'home.html';
+      }
+    }
+
+    function updateCharacter() {
+      const newChar = document.getElementById('newCharacter').value;
+      if (!newChar) {
+        alert('Please select a character');
+        return;
+      }
+
+      const result = window.MovieManiacAuth.updateProfile({ favoriteCharacter: newChar });
+      if (result.success) {
+        alert(result.message);
+        location.reload();
+      } else {
+        alert(result.message);
+      }
+    }
+  </script>
+</body>
+</html>

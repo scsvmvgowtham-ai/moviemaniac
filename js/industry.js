@@ -1,190 +1,238 @@
 // ================= ENHANCED INDUSTRY PAGE - industry.js =================
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", function () {
   const params = new URLSearchParams(window.location.search);
   const industry = params.get("industry");
-  
+
   const industryTitle = document.getElementById("industryTitle");
   const industryBanner = document.getElementById("industryBanner");
   const grid = document.getElementById("industryMovieGrid");
 
-  if (!industry) return;
+  if (!industry || !grid) return;
 
-  const { movies } = window.MovieManiacData;
+  if (!window.MovieManiacData || !Array.isArray(window.MovieManiacData.movies)) {
+    console.error("MovieManiacData not loaded");
+    return;
+  }
+
+  const movies = window.MovieManiacData.movies;
 
   let currentGenre = null;
+  let currentDecade = null;
 
-  // ================= WATCHLIST FUNCTIONALITY =================
+  // ================= WATCHLIST =================
   window.MovieManiacWatchlist = {
-    get: function() {
-      const watchlist = localStorage.getItem('moviemaniac_watchlist');
-      return watchlist ? JSON.parse(watchlist) : [];
+    get: function () {
+      return JSON.parse(localStorage.getItem("moviemaniac_watchlist")) || [];
     },
-    add: function(movieId) {
-      const watchlist = this.get();
-      if (!watchlist.includes(movieId)) {
-        watchlist.push(movieId);
-        localStorage.setItem('moviemaniac_watchlist', JSON.stringify(watchlist));
-        return true;
+    add: function (id) {
+      const list = this.get();
+      if (!list.includes(id)) {
+        list.push(id);
+        localStorage.setItem("moviemaniac_watchlist", JSON.stringify(list));
       }
-      return false;
     },
-    remove: function(movieId) {
-      let watchlist = this.get();
-      watchlist = watchlist.filter(id => id !== movieId);
-      localStorage.setItem('moviemaniac_watchlist', JSON.stringify(watchlist));
+    remove: function (id) {
+      const list = this.get().filter(function (i) {
+        return i !== id;
+      });
+      localStorage.setItem("moviemaniac_watchlist", JSON.stringify(list));
     },
-    has: function(movieId) {
-      return this.get().includes(movieId);
+    has: function (id) {
+      return this.get().includes(id);
     }
   };
 
-  // Set title
-  if (industryTitle) {
-    industryTitle.textContent = industry;
-  }
-
-  // Set banner background
+  if (industryTitle) industryTitle.textContent = industry;
   if (industryBanner) {
-    industryBanner.style.backgroundImage = `url(images/industries/${industry.toLowerCase()}.jpg)`;
+    industryBanner.style.backgroundImage =
+      "url(images/industries/" + industry.toLowerCase() + ".jpg)";
   }
 
-  // ================= CREATE GENRE FILTER =================
-  createGenreFilter(industry);
+  function getDecadeFromYear(year) {
+    if (!year) return "Unknown";
+    return Math.floor(year / 10) * 10 + "s";
+  }
 
-  // ================= DISPLAY INITIAL MOVIES =================
-  displayMoviesByIndustry(industry);
+  createGenreFilter();
+  createDecadeFilter();
+  displayMovies();
 
-  // ================= GENRE FILTER FUNCTION =================
-  function createGenreFilter(industry) {
-    const industryMovies = movies.filter(m => m.industry === industry);
-    const genres = [...new Set(industryMovies.map(m => {
-      return m.genre.split('•')[0].trim();
-    }))].sort();
+  // ================= GENRE FILTER =================
+  function createGenreFilter() {
+    const genres = Array.from(
+      new Set(
+        movies
+          .filter(function (m) {
+            return m.industry === industry;
+          })
+          .map(function (m) {
+            return m.genre.split("•")[0].trim();
+          })
+      )
+    ).sort();
 
-    // Create filter container
-    const filterContainer = document.createElement("div");
-    filterContainer.className = "genre-filter";
-    
-    const filterTitle = document.createElement("h3");
-    filterTitle.textContent = "🎭 Filter by Genre";
-    filterContainer.appendChild(filterTitle);
+    const container = document.createElement("div");
+    container.className = "genre-filter";
 
-    const filterButtons = document.createElement("div");
-    filterButtons.className = "genre-buttons";
+    const title = document.createElement("h3");
+    title.textContent = "Filter by Genre";
+    container.appendChild(title);
 
-    // "All" button
+    const buttons = document.createElement("div");
+    buttons.className = "genre-buttons";
+
     const allBtn = document.createElement("button");
-    allBtn.textContent = "All";
+    allBtn.textContent = "All Genres";
     allBtn.className = "genre-btn active";
-    allBtn.onclick = () => {
+    allBtn.onclick = function () {
       currentGenre = null;
-      document.querySelectorAll('.genre-btn').forEach(b => b.classList.remove('active'));
-      allBtn.classList.add('active');
-      displayMoviesByIndustry(industry);
+      setActive(buttons, allBtn);
+      displayMovies();
     };
-    filterButtons.appendChild(allBtn);
+    buttons.appendChild(allBtn);
 
-    // Genre buttons
-    genres.forEach(genre => {
+    genres.forEach(function (g) {
       const btn = document.createElement("button");
-      btn.textContent = genre;
+      btn.textContent = g;
       btn.className = "genre-btn";
-      btn.onclick = () => {
-        currentGenre = genre;
-        document.querySelectorAll('.genre-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        displayMoviesByIndustry(industry, genre);
+      btn.onclick = function () {
+        currentGenre = g;
+        setActive(buttons, btn);
+        displayMovies();
       };
-      filterButtons.appendChild(btn);
+      buttons.appendChild(btn);
     });
 
-    filterContainer.appendChild(filterButtons);
-    
-    // Insert before movie grid
-    const featured = document.querySelector('.featured');
-    if (featured && grid) {
-      featured.insertBefore(filterContainer, grid);
-    }
+    container.appendChild(buttons);
+    document.querySelector(".featured")?.insertBefore(container, grid);
+  }
+
+  // ================= DECADE FILTER =================
+  function createDecadeFilter() {
+    const decades = Array.from(
+      new Set(
+        movies
+          .filter(function (m) {
+            return m.industry === industry;
+          })
+          .map(function (m) {
+            return getDecadeFromYear(m.year);
+          })
+      )
+    ).sort(function (a, b) {
+      return parseInt(b) - parseInt(a);
+    });
+
+    const container = document.createElement("div");
+    container.className = "genre-filter";
+
+    const title = document.createElement("h3");
+    title.textContent = "Filter by Decade";
+    container.appendChild(title);
+
+    const buttons = document.createElement("div");
+    buttons.className = "genre-buttons";
+
+    const allBtn = document.createElement("button");
+    allBtn.textContent = "All Movies";
+    allBtn.className = "decade-btn active";
+    allBtn.onclick = function () {
+      currentDecade = null;
+      setActive(buttons, allBtn);
+      displayMovies();
+    };
+    buttons.appendChild(allBtn);
+
+    decades.forEach(function (d) {
+      const btn = document.createElement("button");
+      btn.textContent = d;
+      btn.className = "decade-btn";
+      btn.onclick = function () {
+        currentDecade = d;
+        setActive(buttons, btn);
+        displayMovies();
+      };
+      buttons.appendChild(btn);
+    });
+
+    container.appendChild(buttons);
+    document.querySelector(".featured")?.insertBefore(container, grid);
   }
 
   // ================= DISPLAY MOVIES =================
-  function displayMoviesByIndustry(industry, genre = null) {
-    if (!grid) return;
+  function displayMovies() {
+    let filtered = movies.filter(function (m) {
+      return m.industry === industry;
+    });
 
-    let filteredMovies = movies.filter(m => m.industry === industry);
-    
-    // Apply genre filter if selected
-    if (genre) {
-      filteredMovies = filteredMovies.filter(m => 
-        m.genre.split('•')[0].trim() === genre
-      );
+    if (currentGenre) {
+      filtered = filtered.filter(function (m) {
+        return m.genre.split("•")[0].trim() === currentGenre;
+      });
+    }
+
+    if (currentDecade) {
+      filtered = filtered.filter(function (m) {
+        return getDecadeFromYear(m.year) === currentDecade;
+      });
     }
 
     grid.innerHTML = "";
 
-    if (filteredMovies.length === 0) {
+    if (!filtered.length) {
       grid.innerHTML = "<p class='no-results'>No movies found</p>";
       return;
     }
-    
-    filteredMovies.forEach(movie => {
+
+    filtered.forEach(function (movie) {
       const card = document.createElement("div");
       card.className = "movie-card";
-      
-      const isInWatchlist = window.MovieManiacWatchlist.has(movie.id);
-      
-      card.innerHTML = `
-        <div class="watchlist-btn ${isInWatchlist ? 'in-watchlist' : ''}" data-movie-id="${movie.id}">
-          ${isInWatchlist ? '❤️' : '🤍'}
-        </div>
-        <img src="${movie.poster}" alt="${movie.title}">
-        <h3>${movie.title}</h3>
-        <p>${movie.year} • ${movie.genre}</p>
-      `;
-      
-      // Watchlist button click
-      const watchlistBtn = card.querySelector('.watchlist-btn');
-      watchlistBtn.onclick = (e) => {
+
+      const inWatchlist = window.MovieManiacWatchlist.has(movie.id);
+
+      card.innerHTML =
+        '<div class="watchlist-btn ' +
+        (inWatchlist ? "in-watchlist" : "") +
+        '">' +
+        (inWatchlist ? "&hearts;" : "&#9825;") +
+        "</div>" +
+        '<img src="' +
+        movie.poster +
+        '" alt="' +
+        movie.title +
+        '">' +
+        "<h3>" +
+        movie.title +
+        "</h3>" +
+        "<p>" +
+        movie.year +
+        " • " +
+        movie.genre +
+        "</p>";
+
+      card.onclick = function () {
+        window.location.href = "movie-details.html?id=" + movie.id;
+      };
+
+      card.querySelector(".watchlist-btn").onclick = function (e) {
         e.stopPropagation();
-        toggleWatchlist(movie.id, watchlistBtn);
+        if (inWatchlist) {
+          window.MovieManiacWatchlist.remove(movie.id);
+        } else {
+          window.MovieManiacWatchlist.add(movie.id);
+        }
+        displayMovies();
       };
-      
-      // Card click
-      card.onclick = () => {
-        window.location.href = `movie-details.html?id=${movie.id}`;
-      };
-      
+
       grid.appendChild(card);
     });
   }
 
-  // ================= TOGGLE WATCHLIST =================
-  function toggleWatchlist(movieId, btn) {
-    if (window.MovieManiacWatchlist.has(movieId)) {
-      window.MovieManiacWatchlist.remove(movieId);
-      btn.innerHTML = '🤍';
-      btn.classList.remove('in-watchlist');
-      showNotification('Removed from watchlist');
-    } else {
-      window.MovieManiacWatchlist.add(movieId);
-      btn.innerHTML = '❤️';
-      btn.classList.add('in-watchlist');
-      showNotification('Added to watchlist');
-    }
-  }
-
-  // ================= NOTIFICATION =================
-  function showNotification(message) {
-    const notification = document.createElement('div');
-    notification.className = 'notification';
-    notification.textContent = message;
-    document.body.appendChild(notification);
-    
-    setTimeout(() => notification.classList.add('show'), 10);
-    setTimeout(() => {
-      notification.classList.remove('show');
-      setTimeout(() => notification.remove(), 300);
-    }, 2000);
+  function setActive(container, activeBtn) {
+    container.querySelectorAll("button").forEach(function (b) {
+      b.classList.remove("active");
+    });
+    activeBtn.classList.add("active");
   }
 });

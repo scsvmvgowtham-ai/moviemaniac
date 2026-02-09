@@ -1,4 +1,4 @@
-// ================= HOME PAGE - home.js =================
+// ================= ENHANCED HOME PAGE - home.js =================
 
 document.addEventListener("DOMContentLoaded", () => {
   const homeNavGrid = document.getElementById("homeNavGrid");
@@ -39,6 +39,20 @@ document.addEventListener("DOMContentLoaded", () => {
       description: "Learn about the visionary directors behind your favorite films",
       link: "directors.html",
       color: "#9b59b6"
+    },
+    {
+      title: "Watchlist",
+      icon: "❤️",
+      description: "Your personal collection of movies to watch",
+      link: "watchlist.html",
+      color: "#e74c3c"
+    },
+    {
+      title: "Game",
+      icon: "🎮",
+      description: "Test your movie knowledge with our quiz challenges",
+      link: "game.html",
+      color: "#16a085"
     }
   ];
 

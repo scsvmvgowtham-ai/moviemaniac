@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // ================= MOVIE SLIDESHOW =================
-  const slideshowMovies = movies.slice(0, 5); // First 5 movies
+  const slideshowMovies = movies.slice(0, 15); // First 15 movies
   const slideshow = document.getElementById("movieSlideshow");
 
   if (slideshow) {
